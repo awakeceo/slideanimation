@@ -1,0 +1,31 @@
+.section {
+    background-color: white;
+}
+
+#animation-wrapper {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+#slide1 {
+    height: 250vh;
+    position: relative;
+}
+
+#slide1 {
+
+}
+
+#slide2 {background-color: burlywood}
+
+#animate {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+    text-align: center;
+}
+
+#special-opacity {
+    opacity: 0;
+}

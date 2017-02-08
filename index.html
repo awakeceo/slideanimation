@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pagePiling.js/1.5.4/jquery.pagepiling.min.css">-->
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pagePiling.js/1.5.4/jquery.pagepiling.min.css" />
+</head>
+<body>
+
+<div id="pagepiling">
+    <div class="section" id="section1"><div>Section 1</div></div>
+    <div class="section pp-scrollable" id="section2">
+        <div id="animation-container">
+            <div id="animation-wrapper">
+                <div id="slide1">
+                    <div id="animate">
+                        <h1 id="main-head">Test me out</h1>
+                        <div id="special-opacity">
+                            <h1>Let's build something cool</h1>
+                            <p>With best framework</p>
+                        </div>
+                    </div>
+                </div>
+                <!--<div id="slide2">Slide2</div>-->
+            </div>
+        </div>
+    </div>
+        <div class="section" id="section3"><div>Section 3</div></div>
+        <div class="section" id="section4"><div>Section 4</div></div>
+</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pagePiling.js/1.5.4/jquery.pagepiling.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var controller = new ScrollMagic.Controller();
+            $('#pagepiling').pagepiling({
+                menu: null,
+                direction: 'vertical',
+                verticalCentered: true,
+                sectionsColor: [],
+                anchors: [],
+                scrollingSpeed: 700,
+                easing: 'swing',
+                loopBottom: false,
+                loopTop: false,
+                css3: true,
+                navigation: {
+                    'textColor': '#000',
+                    'bulletsColor': '#000',
+                    'position': 'right',
+                    'tooltips': ['section1', 'section2', 'section3', 'section4']
+                },
+                normalScrollElements: '#animation-wrapper',
+                normalScrollElementTouchThreshold: 5,
+                touchSensitivity: 5,
+                keyboardScrolling: true,
+                sectionSelector: '.section',
+                animateAnchor: false,
+                onLeave: function(index, nextIndex, direction){
+                    if(index == 1 && direction =='down'){
+                        $('#animation-wrapper').scrollTop(5);
+                    }
+                    else if(index == 3 && direction == 'up'){
+                        var _h = $('#animation-wrapper').outerHeight()-25;
+                        console.log('back to ', _h);
+                        $('#animation-wrapper').scrollTop(_h);
+                    }
+                },
+                afterLoad: function(anchorLink, index){
+                  if (index == 2) {
+                      //$('#animation-wrapper').scrollTop(5); //must be once
+                      var tl = new TimelineMax();
+                      tl
+                          .fromTo('#main-head', 0.5, {scale: 1}, {scale: 0.8})
+                          .fromTo('#special-opacity', 0.5, {opacity: 0}, {opacity: 1})
+                      ;
+                      var scene = new ScrollMagic.Scene({
+                          triggerElement: '#animate',
+                          offset: 20,
+                          duration: window.innerHeight/2+25
+                          //offset: 150 /* offset the trigger 150px below #scene's top */
+                      })
+                          .setTween(tl)
+                          .setPin('#animate')
+                          .addTo(controller);
+                      scene.addIndicators();
+                  }
+                }
+            });
+            function checkpos(e) {
+                    var aw = $('#animation-wrapper').scrollTop();
+                    var ab = $('#animation-wrapper').outerHeight();
+                    console.log('this '+aw);
+                    if (aw >= $('#animation-wrapper').outerHeight()) {
+                        $.fn.pagepiling.moveTo(3);
+                    }else if(aw == 0) {
+                        $.fn.pagepiling.moveTo(1);
+                    }
+            }
+            $('#animation-wrapper').scroll(function(e) { checkpos(e)});
+        });
+    </script>
+</body>
+</html>
