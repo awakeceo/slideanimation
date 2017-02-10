@@ -1,31 +1,22 @@
-.section {
-    background-color: white;
-}
-
-#animation-wrapper {
-    height: 100vh;
-    overflow-y: scroll;
-}
-
-#slide1 {
-    height: 250vh;
+html, body {
     position: relative;
+    height: 100%;
+    margin:0;
 }
+body {
+    //background: white;
+}
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
 
-#slide1 {
 
 }
+.fp-wrap {
 
-#slide2 {background-color: burlywood}
-
-#animate {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -25%);
-    text-align: center;
 }
-
-#special-opacity {
-    opacity: 0;
+.anim-container {
+    //height: 100vh;
 }
